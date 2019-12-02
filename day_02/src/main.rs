@@ -62,9 +62,9 @@ mod tests {
 
     #[test]
     fn test_sample_input_for_second_part() {
-        let mut program = vec![1,9,10,3,2,3,11,0,99,30,40,50];
+        let program = vec![1,9,10,3,2,3,11,0,99,30,40,50];
 
-        let result = execute_program(& mut program);
+        let result = execute_program(program);
         
         assert_eq!(result, 3500);
     }
