@@ -43,19 +43,15 @@ fn contains_small_group_of_matching_digits(number: i32) -> bool {
         first_digit = digit;
     }
 
-    if num_consecutive_matches == 1 {
-        true
-    } else {
-        false
-    }
+    num_consecutive_matches == 1
 }
 
 fn main() {
-    let start = 402328;
-    let end = 864247;
+    let start = 402_328;
+    let end = 864_247;
 
     let mut digits: Vec<i32> = Vec::new();
-    for i in start..end + 1 {
+    for i in start..=end {
         digits.push(i);
     }
 

@@ -21,12 +21,12 @@ fn find_noun_and_verb(mut program: Vec<usize>) -> (usize, usize) {
             program[2] = j;
 
             let solution = execute_program(program.clone());
-            if solution == 19690720 {
+            if solution == 19_690_720 {
                 return (i, j)
             }
         }
     }
-    return (0,0)
+    (0,0)
 }
 
 fn execute_program(mut program: Vec<usize>) -> usize {

@@ -41,7 +41,7 @@ impl Path {
     }
 }
 
-#[derive(Debug, Clone, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 struct Point {
     x: i32,
     y: i32
@@ -52,13 +52,6 @@ impl Point {
         (self.x - other.x).abs() + (self.y - other.y).abs()
     }
 }
-
-impl PartialEq for Point {
-    fn eq(&self, other: &Point) -> bool {
-        self.x == other.x && self.y == other.y
-    }
-}
-impl Eq for Point {}
 
 struct Wire {
     points: HashSet<Point>,
@@ -128,7 +121,7 @@ fn parse_wire(line: &str) -> Wire {
         }
     }
 
-    Wire { points: points, steps: steps_for_points }
+    Wire { points, steps: steps_for_points }
 }
 
 fn find_closest_intersection(wire1: &HashSet<Point>, wire2: &HashSet<Point>) -> Result<i32, String> {
