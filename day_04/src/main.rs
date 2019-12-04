@@ -4,7 +4,7 @@ fn has_double_digit(number: i32) -> bool {
     let mut first_digit = digits.next().unwrap();
     for digit in digits {
         if first_digit == digit {
-            return true
+            return true;
         }
         first_digit = digit;
     }
@@ -17,7 +17,7 @@ fn is_non_decreasing(number: i32) -> bool {
     let mut first_digit = digits.next().unwrap();
     for digit in digits {
         if digit < first_digit {
-            return false
+            return false;
         }
         first_digit = digit;
     }
@@ -36,7 +36,7 @@ fn contains_small_group_of_matching_digits(number: i32) -> bool {
             num_consecutive_matches += 1;
         } else {
             if num_consecutive_matches == 1 {
-                return true
+                return true;
             }
             num_consecutive_matches = 0;
         }
@@ -55,14 +55,29 @@ fn main() {
         digits.push(i);
     }
 
-    let double_digits: Vec<i32> = digits.into_iter().filter(|x| has_double_digit(*x)).collect();
-    let double_digits_non_decreasing: Vec<i32> = double_digits.into_iter().filter(|x| is_non_decreasing(*x)).collect();
+    let double_digits: Vec<i32> = digits
+        .into_iter()
+        .filter(|x| has_double_digit(*x))
+        .collect();
+    let double_digits_non_decreasing: Vec<i32> = double_digits
+        .into_iter()
+        .filter(|x| is_non_decreasing(*x))
+        .collect();
 
-    println!("Solution for part 1: {}", double_digits_non_decreasing.len());
+    println!(
+        "Solution for part 1: {}",
+        double_digits_non_decreasing.len()
+    );
 
-    let short_double_digits_non_decreasing: Vec<i32> = double_digits_non_decreasing.into_iter().filter(|x| contains_small_group_of_matching_digits(*x)).collect();
-    
-    println!("Solution for part 2: {}", short_double_digits_non_decreasing.len());
+    let short_double_digits_non_decreasing: Vec<i32> = double_digits_non_decreasing
+        .into_iter()
+        .filter(|x| contains_small_group_of_matching_digits(*x))
+        .collect();
+
+    println!(
+        "Solution for part 2: {}",
+        short_double_digits_non_decreasing.len()
+    );
 }
 
 #[cfg(test)]
@@ -92,7 +107,7 @@ mod tests {
         let result = is_non_decreasing(111112);
         assert!(result)
     }
-    
+
     #[test]
     fn check_short_group_of_matching_digits_number() {
         assert!(contains_small_group_of_matching_digits(111122));

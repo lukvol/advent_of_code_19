@@ -1,16 +1,16 @@
-use std::io::BufReader;
-use std::io::prelude::*;
 use std::fs::File;
+use std::io::prelude::*;
+use std::io::BufReader;
 
-use std::collections::HashSet;
-use std::collections::HashMap;
 use std::cmp::Ordering;
+use std::collections::HashMap;
+use std::collections::HashSet;
 
 enum Direction {
     Left,
     Right,
     Up,
-    Down
+    Down,
 }
 
 impl Direction {
@@ -20,14 +20,14 @@ impl Direction {
             'R' => Ok(Direction::Right),
             'U' => Ok(Direction::Up),
             'D' => Ok(Direction::Down),
-            _   => Err(format!("invalid direction: {}!", raw_dir))
+            _ => Err(format!("invalid direction: {}!", raw_dir)),
         }
     }
 }
 
 struct Path {
     direction: Direction,
-    distance: i32
+    distance: i32,
 }
 
 impl Path {
@@ -37,14 +37,17 @@ impl Path {
         let distance = &command[1..];
         let distance = distance.parse().unwrap();
 
-        Path { direction, distance }
+        Path {
+            direction,
+            distance,
+        }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 struct Point {
     x: i32,
-    y: i32
+    y: i32,
 }
 
 impl Point {
@@ -55,7 +58,7 @@ impl Point {
 
 struct Wire {
     points: HashSet<Point>,
-    steps: HashMap<Point, i32>
+    steps: HashMap<Point, i32>,
 }
 
 fn parse_input() -> Vec<Wire> {
@@ -88,25 +91,25 @@ fn parse_wire(line: &str) -> Wire {
 
             match path.direction {
                 Direction::Up => {
-                    point = Point { 
+                    point = Point {
                         x: current_position.x,
                         y: current_position.y + 1,
                     };
-                },
+                }
                 Direction::Down => {
-                    point = Point { 
+                    point = Point {
                         x: current_position.x,
                         y: current_position.y - 1,
                     };
-                },
+                }
                 Direction::Left => {
-                    point = Point { 
+                    point = Point {
                         x: current_position.x - 1,
                         y: current_position.y,
                     };
-                },
+                }
                 Direction::Right => {
-                    point = Point { 
+                    point = Point {
                         x: current_position.x + 1,
                         y: current_position.y,
                     };
@@ -121,10 +124,16 @@ fn parse_wire(line: &str) -> Wire {
         }
     }
 
-    Wire { points, steps: steps_for_points }
+    Wire {
+        points,
+        steps: steps_for_points,
+    }
 }
 
-fn find_closest_intersection(wire1: &HashSet<Point>, wire2: &HashSet<Point>) -> Result<i32, String> {
+fn find_closest_intersection(
+    wire1: &HashSet<Point>,
+    wire2: &HashSet<Point>,
+) -> Result<i32, String> {
     let mut intersection_points: Vec<&Point> = Vec::new();
 
     for point in wire1.intersection(wire2) {
@@ -187,7 +196,7 @@ mod tests {
     fn test_demo_input() {
         let line1 = "R8,U5,L5,D3";
         let line2 = "U7,R6,D4,L4";
-        
+
         let wire1 = parse_wire(&line1);
         let wire2 = parse_wire(&line2);
 
@@ -202,7 +211,7 @@ mod tests {
     fn test_sample_input_1() {
         let line1 = "R75,D30,R83,U83,L12,D49,R71,U7,L72";
         let line2 = "U62,R66,U55,R34,D71,R55,D58,R83";
-        
+
         let wire1 = parse_wire(&line1);
         let wire2 = parse_wire(&line2);
 
@@ -223,7 +232,7 @@ mod tests {
 
         let min_dist = find_closest_intersection(&wire1.points, &wire2.points).unwrap();
         assert_eq!(min_dist, 135);
-        
+
         let min_steps = find_least_amount_of_steps(&wire1, &wire2).unwrap();
         assert_eq!(min_steps, 410);
     }

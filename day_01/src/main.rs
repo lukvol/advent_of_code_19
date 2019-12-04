@@ -1,7 +1,7 @@
-use std::io;
-use std::io::BufReader;
-use std::io::prelude::*;
 use std::fs::File;
+use std::io;
+use std::io::prelude::*;
+use std::io::BufReader;
 
 fn main() -> io::Result<()> {
     let f = File::open("./input.txt")?;
@@ -31,7 +31,7 @@ fn calculate_fuel_for_part_one(mass: i64) -> i64 {
 
 fn calculate_fuel_for_part_two(mass: i64) -> i64 {
     if mass / 3 == 0 {
-        return 0
+        return 0;
     }
 
     let fuel = (mass / 3 - 2).max(0);
